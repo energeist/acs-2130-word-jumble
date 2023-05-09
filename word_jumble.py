@@ -21,19 +21,23 @@ if __name__ == "__main__":
 
     jumbled_words = ["tefon", "sokik", "niumem", "siconu"] # often, kiosk, immune, cousin
 
+    # initialize dictionary
     dictionary = dictionary_hashtable()
 
     possible_combinations = []
     solved_words = []
 
+    # get permutations from jumbled words
     for jumble in jumbled_words:
         possible_combinations.append(permutations(jumble))
 
+    # pick valid words from the full list
     for combo_list in possible_combinations:
         for combo in combo_list:
             if combo in dictionary and combo not in solved_words:
                 solved_words.append(combo)
 
+    # create an array of characters from the provided indices
     final_characters = ''.join([
         solved_words[0][2],
         solved_words[0][4],
@@ -47,6 +51,7 @@ if __name__ == "__main__":
 
     possible_finals = []
 
+    # pick out two and six word combinations of valid words, since we know the solution has the form ()()-()()()()()()
     final_combos = permutations(final_characters)
     for combo in final_combos:
         if combo[0:2] in dictionary and combo[2:] in dictionary:
