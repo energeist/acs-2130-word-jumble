@@ -1,31 +1,27 @@
 def dictionary_hashtable():
     with open("/usr/share/dict/words") as text:
         words = text.read().split()
+    # use python dict as a hashtable for lookup speed
     hashtable = {}
-    two_letter_words = []
-    six_letter_words = []
     for word in words:
         word = word.replace("'", "")
         hashtable.update({word.lower(): word.lower()})
-        if len(word.strip("'")) == 2:
-            two_letter_words.append(word)
-        elif len(word.strip("'")) == 6:
-            six_letter_words.append(word)
-    return hashtable, two_letter_words, six_letter_words
+    return hashtable
 
 def permutations(word):        
     if(len(word)==1): 
         return [word]
     results=[]
     for i, char in enumerate(word):
-        results += [char+p for p in permutations(word[:i]+word[i+1:])]
+        # solve recursively with list comprehension
+        results += [char+remainder for remainder in permutations(word[:i]+word[i+1:])]
     return results
 
 if __name__ == "__main__":
 
     jumbled_words = ["tefon", "sokik", "niumem", "siconu"] # often, kiosk, immune, cousin
 
-    dictionary, twos, sixes = dictionary_hashtable()
+    dictionary = dictionary_hashtable()
 
     possible_combinations = []
     solved_words = []
@@ -52,12 +48,11 @@ if __name__ == "__main__":
     possible_finals = []
 
     final_combos = permutations(final_characters)
-    # print(final_combos)
     for combo in final_combos:
         if combo[0:2] in dictionary and combo[2:] in dictionary:
             if combo not in possible_finals:
                 possible_finals.append(combo)
-                
+
     print(f"Starting jumbled words are: {jumbled_words}")
     print(f"Solved words are {solved_words}")
     print(f"Characters in the final word are: {final_characters}")
