@@ -1,7 +1,7 @@
 def dictionary_hashtable():
     with open("/usr/share/dict/words") as text:
         words = text.read().split()
-    # use python dict as a hashtable for lookup speed
+    # use python dict as a hashtable for lookup speed, where key and value are the same
     hashtable = {}
     for word in words:
         word = word.replace("'", "")
